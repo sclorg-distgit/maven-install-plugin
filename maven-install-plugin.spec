@@ -4,7 +4,7 @@
 
 Name:           %{?scl_prefix}%{pkg_name}
 Version:        2.4
-Release:        7.11%{?dist}
+Release:        7.12%{?dist}
 Summary:        Maven Install Plugin
 
 License:        ASL 2.0
@@ -14,23 +14,23 @@ Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{pkg_nam
 BuildArch:      noarch
 
 BuildRequires: %{?scl_prefix_java_common}maven-local
-BuildRequires: maven30-maven-plugin-plugin
-BuildRequires: maven30-maven-jar-plugin
-BuildRequires: maven30-maven-install-plugin
-BuildRequires: maven30-maven-resources-plugin
-BuildRequires: maven30-maven-compiler-plugin
-BuildRequires: maven30-maven-javadoc-plugin
-BuildRequires: maven30-maven-surefire-plugin
-BuildRequires: maven30-maven-surefire-provider-junit
-BuildRequires: maven30-maven-doxia-sitetools
-BuildRequires: maven30-maven-plugin-testing-harness
-BuildRequires: maven30-plexus-utils
-BuildRequires: maven30-plexus-digest
+BuildRequires: %{?scl_prefix}maven-plugin-plugin
+BuildRequires: %{?scl_prefix}maven-jar-plugin
+BuildRequires: %{?scl_prefix}maven-install-plugin
+BuildRequires: %{?scl_prefix}maven-resources-plugin
+BuildRequires: %{?scl_prefix}maven-compiler-plugin
+BuildRequires: %{?scl_prefix}maven-javadoc-plugin
+BuildRequires: %{?scl_prefix}maven-surefire-plugin
+BuildRequires: %{?scl_prefix}maven-surefire-provider-junit
+BuildRequires: %{?scl_prefix}maven-doxia-sitetools
+BuildRequires: %{?scl_prefix}maven-plugin-testing-harness
+BuildRequires: %{?scl_prefix}plexus-utils
+BuildRequires: %{?scl_prefix}plexus-digest
 BuildRequires: %{?scl_prefix_java_common}junit
-BuildRequires: maven30-maven-archiver
-BuildRequires: maven30-maven-reporting-impl
-BuildRequires: maven30-mvn(org.apache.maven:maven-artifact:2.0.6)
-BuildRequires: maven30-mvn(org.apache.maven:maven-model:2.0.6)
+BuildRequires: %{?scl_prefix}maven-archiver
+BuildRequires: %{?scl_prefix}maven-reporting-impl
+BuildRequires: %{?scl_prefix}mvn(org.apache.maven:maven-artifact:2.0.6)
+BuildRequires: %{?scl_prefix}mvn(org.apache.maven:maven-model:2.0.6)
 
 
 %description
@@ -45,7 +45,7 @@ API documentation for %{pkg_name}.
 
 %prep
 %setup -q -n %{pkg_name}-%{version}
-%{?scl:scl enable maven30 %{scl} - <<"EOF"}
+%{?scl:scl enable %{scl} - <<"EOF"}
 set -e -x
 # maven-core has scope "provided" in Plugin Testing Harness, so we
 # need to provide it or tests will fail to compile.  This works for
@@ -55,13 +55,13 @@ set -e -x
 %{?scl:EOF}
 
 %build
-%{?scl:scl enable maven30 %{scl} - <<"EOF"}
+%{?scl:scl enable %{scl} - <<"EOF"}
 set -e -x
 %mvn_build -f
 %{?scl:EOF}
 
 %install
-%{?scl:scl enable maven30 %{scl} - <<"EOF"}
+%{?scl:scl enable %{scl} - <<"EOF"}
 set -e -x
 %mvn_install
 %{?scl:EOF}
@@ -75,6 +75,9 @@ set -e -x
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Jan 11 2016 Michal Srb <msrb@redhat.com> - 2.4-7.12
+- maven33 rebuild #2
+
 * Sat Jan 09 2016 Michal Srb <msrb@redhat.com> - 2.4-7.11
 - maven33 rebuild
 
